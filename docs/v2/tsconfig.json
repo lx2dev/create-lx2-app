@@ -19,10 +19,9 @@
         "name": "next"
       }
     ],
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@/.source/*": [".source/*"]
+      "@/.source/*": ["./.source/*"]
     }
   },
   "include": [
