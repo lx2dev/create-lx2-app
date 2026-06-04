@@ -1,12 +1,12 @@
 import { findNeighbour } from "fumadocs-core/page-tree"
-import type { Metadata } from "next"
+import { type Metadata } from "next"
 import { notFound } from "next/navigation"
 
 import { DocsHeader } from "@/components/docs/header"
 import { DocsPagination } from "@/components/docs/pagination"
 import { TableOfContents } from "@/components/docs/toc"
 import { source } from "@/lib/source"
-import { absoluteUrl } from "@/lib/utils"
+import { absoluteUrl, formatDate } from "@/lib/utils"
 import { mdxComponents } from "@/mdx-components"
 
 export const revalidate = false
@@ -70,6 +70,7 @@ export default async function DocsPage({ params }: DocsPageProps) {
   const MDX = doc.body
   const neighbours = findNeighbour(source.pageTree, page.url)
   const raw = await page.data.getText("raw")
+  const lastModified = page.data.lastModified
 
   return (
     <div
@@ -91,6 +92,14 @@ export default async function DocsPage({ params }: DocsPageProps) {
         </div>
 
         <DocsPagination neighbours={neighbours} />
+
+        {lastModified && (
+          <div className="mx-auto mt-8 w-full max-w-2xl px-4 md:px-0">
+            <p className="text-muted-foreground text-sm">
+              Last updated on {formatDate(new Date(lastModified))}
+            </p>
+          </div>
+        )}
       </div>
 
       {doc.toc?.length ? (

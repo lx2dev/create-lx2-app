@@ -9,7 +9,7 @@ export function absoluteUrl(path: string) {
   return `${process.env.NEXT_PUBLIC_URL}${path}`
 }
 
-export async function getNpmVersion(beta: boolean = false): Promise<string> {
+export async function getNpmVersion(beta = false): Promise<string> {
   // Fetch the latest release of the package from npm
   // If beta is true, fetch the beta release
 
@@ -67,4 +67,12 @@ export function formatVersionText(
   return template
     .replace(/\{\{version\}\}/g, version)
     .replace(/\{\{name\}\}/g, packageName)
+}
+
+export function formatDate(date: Date, locale = "en-US"): string {
+  return date.toLocaleDateString(locale, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
 }
